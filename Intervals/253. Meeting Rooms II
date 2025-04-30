@@ -26,3 +26,19 @@ class Solution {
         return res;
     }
 }
+
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+       
+        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
+        PriorityQueue<Integer> minH = new PriorityQueue<>();
+
+        for(int[] interval: intervals){
+            if(!minH.isEmpty() && minH.peek() <= interval[0]){
+                minH.poll();
+            }
+            minH.add(interval[1]);
+        }
+        return minH.size();
+    }
+}
