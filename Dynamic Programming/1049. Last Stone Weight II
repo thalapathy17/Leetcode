@@ -1,0 +1,27 @@
+class Solution {
+    Map<String, Integer> memo;
+    int half;
+    int totalSum;
+    public int lastStoneWeightII(int[] stones) {
+        totalSum = 0;
+        memo = new HashMap<>();
+        for(int stone: stones){
+            totalSum += stone;
+        }
+        half = (int) Math.ceil(totalSum/2);
+        return dfs(0, 0, stones);
+    }
+    private int dfs(int i, int total, int[] stones){
+        
+        if(total >= half || i == stones.length){
+            return Math.abs(total - (totalSum - total));
+        }
+        String key = i + "-" + total;
+        if(memo.containsKey(key)){
+            return memo.get(key);
+        }
+        int value = Math.min(dfs(i + 1, total + stones[i], stones), dfs(i + 1, total, stones));
+        memo.put(key, value);
+        return value;
+    }
+}
