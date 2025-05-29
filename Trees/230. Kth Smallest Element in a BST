@@ -28,3 +28,22 @@ class Solution {
         dfs(node.right, k);
     }
 }
+
+
+
+
+
+class Solution {
+    List<Integer> res;
+    public int kthSmallest(TreeNode root, int k) {
+        res = new ArrayList<>();
+        inorder(root);
+        return res.get(k-1);
+    }
+    private void inorder(TreeNode node){
+        if(node == null) return;
+        inorder(node.left);
+        res.add(node.val);
+        inorder(node.right);
+    }
+}
