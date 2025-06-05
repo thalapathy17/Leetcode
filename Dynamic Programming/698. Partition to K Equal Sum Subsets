@@ -1,0 +1,37 @@
+class Solution {
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int total = 0;
+        for (int num : nums) total += num;
+        if (total % k != 0) return false;
+
+        int target = total / k;
+        Arrays.sort(nums);
+        int n = nums.length;
+        if (nums[n - 1] > target) return false;
+
+        Boolean[] memo = new Boolean[1 << n]; // memoization by bitmask of used elements
+        return backtrack(nums, 0, 0, k, target, 0, memo);
+    }
+
+    private boolean backtrack(int[] nums, int usedMask, int currSum, int k, int target, int start, Boolean[] memo) {
+        if (k == 0) return true;
+        if (memo[usedMask] != null) return memo[usedMask];
+        if (currSum == target) {
+            // Start next bucket
+            boolean res = backtrack(nums, usedMask, 0, k - 1, target, 0, memo);
+            memo[usedMask] = res;
+            return res;
+        }
+
+        for (int i = start; i < nums.length; i++) {
+            if (((usedMask >> i) & 1) == 1) continue; // already used
+            if (currSum + nums[i] > target) continue;
+
+            if (backtrack(nums, usedMask | (1 << i), currSum + nums[i], k, target, i + 1, memo)) {
+                return memo[usedMask] = true;
+            }
+        }
+
+        return memo[usedMask] = false;
+    }
+}
