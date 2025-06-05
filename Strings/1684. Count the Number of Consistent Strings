@@ -17,3 +17,26 @@ class Solution {
         return res;
     }
 }
+
+
+class Solution {
+    public int countConsistentStrings(String allowed, String[] words) {
+        int bitmask = 0;
+        for(char c: allowed.toCharArray()){
+            int bit = 1 << (c -'a');
+            bitmask = bit | bitmask;
+        }
+
+        int res = words.length;
+        for(String word: words){
+            for(char c: word.toCharArray()){
+                int bit = 1 << (c - 'a');
+                if((bit & bitmask) == 0){
+                    res--;
+                    break;
+                }
+            } 
+        }
+        return res;
+    }
+}
