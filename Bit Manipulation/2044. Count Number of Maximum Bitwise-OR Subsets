@@ -1,0 +1,24 @@
+class Solution {
+
+    private int max = 0;
+    private int res = 0;
+
+    public int countMaxOrSubsets(int[] nums) {
+        for(int num: nums){
+            max |= num;
+        }
+        helper(0, 0, nums);
+        return res;
+    }
+    private void helper(int i, int curOrVal, int[] nums){
+        if(i == nums.length){
+            if(curOrVal == max){
+                res++;
+            }
+            return;
+        }
+       
+        helper(i+1, curOrVal | nums[i], nums);
+        helper(i+1, curOrVal, nums);
+    }
+}
