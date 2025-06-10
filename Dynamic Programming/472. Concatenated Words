@@ -1,0 +1,32 @@
+    class Solution {
+        Map<String, Boolean> memo = new HashMap<>();
+        public List<String> findAllConcatenatedWordsInADict(String[] words) {
+            List<String> res = new ArrayList<>();
+            HashSet<String> set = new HashSet<>(Arrays.asList(words));
+
+        
+            for(String word: words){
+                if(word.isEmpty()) continue;
+                if(dfs(word, set)){
+                    res.add(word);
+                }
+            }
+            return res;
+        }
+        private boolean dfs(String word, HashSet<String> set){
+
+            if(memo.containsKey(word)) return memo.get(word);
+
+            for(int i = 1; i < word.length(); i++){
+                String prefix = word.substring(0, i);
+                String suffix = word.substring(i);
+                if(set.contains(prefix) && (set.contains(suffix) ||  dfs(suffix, set))){
+                    memo.put(word, true);
+                    return true;
+                }
+            }
+
+            memo.put(word, false);
+            return false;
+        }
+    }
