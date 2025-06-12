@@ -24,3 +24,32 @@ class Solution {
         return res;
     }
 }
+
+
+
+class Solution {
+    public int lenLongestFibSubseq(int[] arr) {
+        int n = arr.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < n; i++){
+            map.put(arr[i], i);
+        }
+        int res = 0;
+        int[][] dp = new int[n][n];
+        for(int i = n-2; i >= 0; i--){
+            for(int j = n-1; j > i; j--){
+                long prev = arr[i];
+                long curr = arr[j];
+                long nxt = prev + curr;
+                int length = 2;
+                if(nxt <= Integer.MAX_VALUE && map.containsKey((int)nxt)){
+                    int nxtInd = map.get((int)nxt);
+                    length = 1 + dp[j][nxtInd];
+                    res = Math.max(res, length);
+                }
+                dp[i][j] = length;
+            }
+        }
+        return res;
+    }
+}
