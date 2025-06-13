@@ -1,0 +1,37 @@
+class Solution {
+    int n;
+    public int minimizeMax(int[] nums, int p) {
+
+        Arrays.sort(nums);
+        n = nums.length;
+        if(p == 0) return 0;
+
+        int l = 0, r = nums[n-1] - nums[0];
+        int res = r;
+
+        while(l <= r){
+            int m = l + (r-l)/2;
+            if(isValid(nums, m, p)){
+                res = m;
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        }
+        return res;
+    }
+
+    private boolean isValid(int[] nums, int threshold, int p){
+        int countPairs = 0;
+        int i = 0; 
+        while(i < n-1){
+            if(nums[i + 1] - nums[i] <= threshold){
+                countPairs++;
+                i += 2;
+            } else{
+                i++;
+            }
+        }
+        return countPairs >= p;
+    }
+}
