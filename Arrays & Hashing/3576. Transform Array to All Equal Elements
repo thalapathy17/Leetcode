@@ -1,0 +1,21 @@
+class Solution {
+    public boolean canMakeEqual(int[] nums, int k) {
+        
+        int[] numsPos = Arrays.copyOf(nums, nums.length);
+        int[] numsNeg = Arrays.copyOf(nums, nums.length);
+        
+        return MakeEqual(numsPos, 1) <= k || MakeEqual(numsNeg, -1) <= k;
+    }
+    private int MakeEqual(int[] nums, int target){
+        int count = 0;
+        int n = nums.length;
+        for(int i = 0 ; i < n-1; i++){
+            if(nums[i] != target){
+                nums[i] = -nums[i];
+                nums[i+1] = -nums[i+1];
+                count++;
+            }
+        }
+        return nums[n-1] == target ? count : Integer.MAX_VALUE;
+    }
+}
