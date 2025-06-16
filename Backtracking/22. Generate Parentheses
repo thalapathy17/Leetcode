@@ -1,0 +1,23 @@
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        StringBuilder str = new StringBuilder();
+        List<String> res = new ArrayList<>();
+        generate(str, res, 0, 0, n);
+        return res;
+    }
+
+    private void generate(StringBuilder str, List<String> res, int open, int close, int n){
+        if(open == close && close == n){
+            res.add(new String(str));
+            return;
+        }
+        if(open < n){
+            generate(str.append('('), res, open + 1, close, n);
+            str.deleteCharAt(str.length() -1);
+        }
+        if(open > close){
+            generate(str.append(')'), res, open, close + 1, n);
+            str.deleteCharAt(str.length() -1);
+        }
+    }
+}
