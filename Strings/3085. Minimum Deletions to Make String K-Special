@@ -1,0 +1,25 @@
+class Solution {
+    public int minimumDeletions(String word, int k) {
+
+        Map<Character, Integer> freq = new HashMap<>();
+        for(char ch: word.toCharArray()){
+            freq.put(ch, freq.getOrDefault(ch, 0) + 1);
+        }
+
+        int minDeletions = Integer.MAX_VALUE;
+
+        for(int f1: freq.values()){
+            int currDeletions = 0;
+            for(int f2: freq.values()){
+                int diff = f2 - f1;
+                if(f1 > f2){
+                    currDeletions += f2;
+                } else if(diff > k){
+                    currDeletions += diff - k;
+                }
+            }
+            minDeletions = Math.min(currDeletions, minDeletions);
+        }
+        return minDeletions;
+    }
+}
