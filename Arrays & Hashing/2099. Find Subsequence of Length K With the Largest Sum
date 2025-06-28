@@ -1,0 +1,21 @@
+class Solution {
+    public int[] maxSubsequence(int[] nums, int k) {
+
+        List<int[]> indexNums = new ArrayList<>();
+
+        for(int i = 0; i < nums.length; i++){
+            indexNums.add(new int[]{nums[i], i});
+        }
+        indexNums.sort((a,b) -> Integer.compare(b[0], a[0]));
+
+        List<int[]> kLargest = new ArrayList<>(indexNums.subList(0, k));
+
+        kLargest.sort(Comparator.comparingInt(a -> a[1]));
+
+        int[] result = new int[k];
+        for(int i = 0; i < k; i++){
+            result[i] = kLargest.get(i)[0];
+        }
+        return result;
+    }
+}
