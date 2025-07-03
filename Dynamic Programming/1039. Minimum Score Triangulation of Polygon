@@ -1,0 +1,27 @@
+class Solution {
+    public int minScoreTriangulation(int[] values) {
+        int n = values.length;
+        int[][] dp = new int[n][n];
+        for(int x = 0; x < n; x++){
+            for(int y = 0; y < n; y++){
+                dp[x][y] = -1;
+            }
+        }
+        return solve(0, n - 1, values, dp);
+    }
+
+    private int solve(int i, int j, int[] values, int[][] dp){
+        if(i + 1 == j){
+            return 0;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        int ans = Integer.MAX_VALUE;
+        for(int k = i + 1; k < j; k++){
+            ans = Math.min(ans, values[i] * values[j] * values[k] + solve(k, j, values, dp) + solve(i, k, values, dp));
+        }
+        dp[i][j] = ans;
+        return dp[i][j];
+    }
+}
