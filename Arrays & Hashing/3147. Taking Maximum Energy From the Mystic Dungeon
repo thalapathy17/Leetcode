@@ -1,0 +1,19 @@
+class Solution {
+    public int maximumEnergy(int[] energy, int k) {
+        
+        int n = energy.length;
+        int ans = Integer.MIN_VALUE;
+
+        for(int i = n - 1; i >= n - k; i--){
+
+            int j = i;
+            int total = 0;
+            while(j >= 0){
+                total += energy[j];
+                ans = Math.max(ans, total);
+                j -= k;
+            }
+        }
+        return ans;
+    }
+}
