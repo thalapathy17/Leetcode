@@ -1,0 +1,22 @@
+class Solution {
+    private static final int MOD = 1000000007;
+    public int specialTriplets(int[] nums) {
+        
+        Map<Integer, Integer> valid_j = new HashMap<>();
+        Map<Integer, Integer> valid_i = new HashMap<>();
+
+        long res = 0;
+        for(int i = 0; i < nums.length; i++){
+
+            if(nums[i] % 2 == 0){
+                res = (res + valid_j.getOrDefault(nums[i]/2, 0)) % MOD;
+            }
+            //check valid_j
+            valid_j.put(nums[i], (int)(((long)valid_j.getOrDefault(nums[i], 0) + valid_i.getOrDefault(nums[i] * 2, 0)) % MOD));
+
+
+            valid_i.put(nums[i], valid_i.getOrDefault(nums[i], 0) + 1);
+        }
+        return (int)res;
+    }
+}
