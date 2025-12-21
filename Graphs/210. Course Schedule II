@@ -1,0 +1,44 @@
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        
+        List<Integer> adj[] = new ArrayList[numCourses + 1];
+        for(int i = 0; i < numCourses; i++){
+            adj[i] = new ArrayList<>();
+        }
+        for(int[] prereq: prerequisites){
+            adj[prereq[1]].add(prereq[0]);
+        }
+        Stack<Integer> st = new Stack<>();
+        int[] output = new int[numCourses];
+        int[] visited = new int[numCourses];
+        for(int k = 0; k < numCourses; k++){
+            if(!helper(k, adj, st, visited)){
+                return new int[]{};
+            }
+        }
+        int i = 0;
+        while(!st.isEmpty()){
+            output[i] = st.pop();
+            i++;
+        }
+        return output;
+    }
+
+    private boolean helper(int index, List<Integer> adj[], Stack<Integer> st, int[] visited){
+        if(visited[index] == 2){
+            return true;
+        }
+        if(visited[index] == 1){
+            return false;
+        }
+        visited[index] = 1;
+        for(int nei: adj[index]){
+            if(!helper(nei, adj, st, visited)){
+                return false;
+            }
+        }
+        st.push(index);
+        visited[index] = 2;
+        return true;
+    }
+}
