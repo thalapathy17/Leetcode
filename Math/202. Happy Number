@@ -23,3 +23,28 @@ class Solution {
         return res;
     }
 }
+
+
+
+
+class Solution {
+    public boolean isHappy(int n) {
+        int slow = n;
+        int fast = getSquare(n);
+        while(slow != 1 && slow != fast){
+            slow = getSquare(slow);
+            fast = getSquare(getSquare(fast));
+        }
+        return fast == 1;
+    }
+
+    private int getSquare(int n){
+        int res = 0;
+        while(n > 0){
+            int temp = n % 10;
+            res += temp*temp;
+            n /= 10;
+        }
+        return res;
+    }
+}
