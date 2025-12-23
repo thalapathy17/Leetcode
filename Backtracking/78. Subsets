@@ -17,3 +17,27 @@ class Solution {
         helper(ind + 1, nums, temp);
     }
 }
+
+
+
+class Solution {
+
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        helper(ans, 0, nums, new ArrayList<>());
+        return ans;
+    }
+
+    public void helper(List<List<Integer>> ans, int start, int[] nums, List<Integer> runningList) {
+            ans.add(new ArrayList<>(runningList));
+        // add the element and start the  recursive call
+            for(int i = start; i<nums.length; i++) {
+                runningList.add(nums[i]);
+            helper(ans, i + 1, nums, runningList);
+            // remove the element and do the backtracking call.
+            runningList.remove(runningList.size() - 1);
+            }
+            
+        }
+}
+
