@@ -10,9 +10,10 @@ class Solution {
         while(maxH.size() > 1){
             int y = maxH.poll();
             int x = maxH.poll();
-            maxH.add(y - x);
+            if(x != y){
+                maxH.add(y - x);
+            }
         }
-
         return maxH.size() == 1 ? maxH.peek() : 0;
     }
 }
