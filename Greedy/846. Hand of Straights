@@ -20,3 +20,25 @@ class Solution {
         return true;
     }
 }
+
+OR
+
+class Solution {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        for(int x: hand){
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        }
+        while(!map.isEmpty()){
+            int y = map.firstKey();
+            for(int j = y; j < y + groupSize; j++){
+                Integer cnt = map.get(j);
+                if(cnt == null) return false;
+                if(cnt == 1) map.remove(j);
+                else map.put(j, cnt - 1);
+            }
+        }
+        return true;
+    }
+}
