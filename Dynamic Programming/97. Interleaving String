@@ -1,0 +1,31 @@
+class Solution {
+    Map<String, Boolean> memo;
+    public boolean isInterleave(String s1, String s2, String s3) {
+        
+        int a = s1.length();
+        int b = s2.length();
+        int n = s3.length();
+        memo = new HashMap<>();
+
+        if(a + b != n) return false;
+        return helper(0, 0, s1, s2, s3);
+    }
+
+    private boolean helper(int i, int j, String s1, String s2, String s3){
+        if(i == s1.length() && j == s2.length()) return true;
+
+        String key = i + "-" + j;
+        if(memo.containsKey(key)){
+            return memo.get(key);
+        }
+        boolean res = false;
+        if(i < s1.length() && s3.charAt(i + j) == s1.charAt(i)){
+            res = res | helper(i + 1, j, s1, s2, s3);
+        }
+        if(j < s2.length() && s3.charAt(i + j) == s2.charAt(j)){
+            res = res | helper(i, j + 1, s1, s2, s3);
+        }
+        memo.put(key, res);
+        return res;
+    }
+}
